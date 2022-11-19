@@ -1,3 +1,23 @@
+	//
+/obj/item/testobj
+	name = "Facility Diagnostics"
+	icon = 'ModularTegustation/Teguicons/teguitems.dmi'
+	icon_state = "gadget2_high"
+	var/list/currentabnormalities = list()
+	var/total_unique_boxes = 0
+	var/abnotokens
+
+/obj/item/testobj/attack_self(mob/living/carbon/user)
+	abnotokens = "Abnormality Tokens:"
+	total_unique_boxes = 0
+	currentabnormalities = SSlobotomy_corp.all_abnormality_datums
+	for(var/datum/abnormality/A in currentabnormalities)
+		currentabnormalities[A] = A.stored_boxes
+		total_unique_boxes += A.stored_boxes
+		abnotokens += "<br>[A.name] [A.stored_boxes]"
+	user.visible_message("<span class='notice'>Raw Energy Measure:[SSlobotomy_corp.current_box]/[SSlobotomy_corp.box_goal] <br>Total Abnormality Tokens:[total_unique_boxes]<br>[abnotokens]</span>")
+
+
 	//Defective Manager Bullet PLACEHOLDER OR PROTOTYPE SHIELDS
 /obj/item/managerbullet
 	name = "prototype manager bullet"
