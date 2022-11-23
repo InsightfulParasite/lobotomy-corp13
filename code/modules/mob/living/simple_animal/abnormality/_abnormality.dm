@@ -115,12 +115,15 @@
 	if(target && patrol_path) //if AI has acquired a target while on patrol, stop patrol
 		patrol_reset()
 		return
-	if(AIStatus == AI_IDLE) //if AI is idle, begin checking for patrol
+	if(CanStartPatrol())
 		if(patrol_cooldown <= world.time)
 			if(!patrol_path || !patrol_path.len)
 				patrol_select()
 				if(patrol_path.len)
 					patrol_move(patrol_path[patrol_path.len])
+
+/mob/living/simple_animal/hostile/abnormality/proc/CanStartPatrol()
+	return AIStatus == AI_IDLE //if AI is idle, begin checking for patrol
 
 /mob/living/simple_animal/hostile/abnormality/proc/patrol_select()
 	var/turf/target_center
@@ -312,6 +315,7 @@
 	toggle_ai(AI_ON) // Run.
 	status_flags &= ~GODMODE
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ABNORMALITY_BREACH, src)
+	FearEffect()
 
 // On lobotomy_corp subsystem qliphoth event
 /mob/living/simple_animal/hostile/abnormality/proc/OnQliphothEvent()
