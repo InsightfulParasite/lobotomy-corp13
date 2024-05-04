@@ -230,20 +230,6 @@
 	result = /obj/item/food/salad/aesirsalad
 	subcategory = CAT_UNUSUAL
 
-/datum/crafting_recipe/food/nogga_black
-	name = "Nogga black"
-	reqs = list(
-		/obj/item/popsicle_stick = 1,
-		/datum/reagent/consumable/blumpkinjuice = 4, //natural source of ammonium chloride
-		/datum/reagent/consumable/salt = 2,
-		/datum/reagent/consumable/ice = 2,
-		/datum/reagent/consumable/cream = 2,
-		/datum/reagent/consumable/vanilla = 2,
-		/datum/reagent/consumable/sugar = 2
-	)
-	result = /obj/item/food/popsicle/nogga_black
-	subcategory = CAT_UNUSUAL
-
 /////NEEDS TO BE LEARNED FIRST/////
 
 /datum/crafting_recipe/food/donut/trumpet
