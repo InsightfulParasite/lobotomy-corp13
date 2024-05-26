@@ -113,6 +113,61 @@
 	)
 
 /**
+* TRIPWIRE TRAPS
+*/
+	//Tripwire Trap
+/datum/crafting_recipe/tripwire
+	name = "Tripwire"
+	result = /obj/structure/destructible/tripwire_trap
+	reqs = list(/obj/item/stack/sheet/cotton/cloth = 2, /obj/item/stack/sheet/mineral/wood = 2)
+	time = 40
+	category = CAT_MISC
+
+/obj/structure/destructible/tripwire_trap
+	name = "tripwire"
+	desc = "A string attached to two sticks."
+	icon = 'ModularTegustation/Teguicons/32x32.dmi'
+	icon_state = "tripwire"
+	alpha = 100
+	break_message = "<span class='warning'>The trap falls apart!</span>"
+	debris = list(/obj/item/stack/sheet/cotton/cloth = 1)
+	var/triggered_attack
+
+/obj/structure/destructible/tripwire_trap/Initialize()
+	..()
+	if(!isfloorturf(get_turf(src)))
+		qdel(src)
+	if(mapload)
+		var/obj/item/I = locate(/obj/item) in loc
+		I.forceMove(src)
+
+/obj/structure/destructible/tripwire_trap/attackby(obj/item/W, mob/user)
+	if(!triggered_attack && isitem(W))
+		visible_message(span_notice("[user] ties [W] to the [src]."))
+		W.forceMove(src)
+		triggered_attack = 1
+	return ..()
+
+/obj/structure/destructible/tripwire_trap/Crossed(atom/movable/AM)
+	. = ..()
+	if(triggered_attack == 1)
+		trapEffect(AM)
+
+/obj/structure/destructible/tripwire_trap/proc/trapEffect(mob/living/L)
+	for(var/obj/item/I in src)
+		visible_message(span_notice("[I] swings down."))
+		I.forceMove(get_turf(src))
+		UniqueItemEffect(I)
+		I.throw_impact(L)
+		triggered_attack = 0
+	deconstruct(TRUE)
+
+/obj/structure/destructible/tripwire_trap/proc/UniqueItemEffect(obj/item/I)
+	if(istype(I, /obj/item/grenade))
+		var/obj/item/grenade/G = I
+		G.arm_grenade(null, G.det_time)
+
+/**
  * List of button counters
  * Required as persistence subsystem loads after the ones present at mapload, and to reset to 0 upon explosion.
  */
