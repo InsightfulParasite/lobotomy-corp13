@@ -437,6 +437,7 @@
 #include "code\datums\abnormality\datum\abnormality.dm"
 #include "code\datums\achievements\_achievement_data.dm"
 #include "code\datums\achievements\_awards.dm"
+#include "code\datums\achievements\abnormality_achievements.dm"
 #include "code\datums\achievements\boss_achievements.dm"
 #include "code\datums\achievements\boss_scores.dm"
 #include "code\datums\achievements\mafia_achievements.dm"

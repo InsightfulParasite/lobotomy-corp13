@@ -20,6 +20,12 @@
 	database_id = MEDAL_TIMEWASTE
 	icon = "timewaste"
 
+/datum/award/achievement/misc/scorpworld
+	name = "A Shrimple Arrangement"
+	desc = "One of your characters lived to be recruited by S corp."
+	database_id = MEDAL_SCORPWORLD
+	icon = "shrimp"
+
 /datum/award/achievement/misc/feat_of_strength
 	name = "Feat of Strength"
 	desc = "If the rod is immovable, is it passing you or are you passing it?"
