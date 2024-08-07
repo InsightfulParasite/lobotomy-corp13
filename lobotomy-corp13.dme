@@ -3976,6 +3976,7 @@
 #include "ModularTegustation\tegu_virology.dm"
 #include "ModularTegustation\tegufood.dm"
 #include "ModularTegustation\tegushuttles.dm"
+#include "ModularTegustation\testing_mob.dm"
 #include "ModularTegustation\trusted.dm"
 #include "ModularTegustation\turfs.dm"
 #include "ModularTegustation\_adventure_console\adventure_layout.dm"
