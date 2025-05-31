@@ -15,7 +15,7 @@
 	/*
 	* Company Standard Stonk Time
 	*/
-	var/static/last_login = 0
+	var/static/last_check = 0
 	/*
 	* Your stonks!
 	*/
@@ -31,9 +31,14 @@
 
 /datum/stonk_investor/proc/InitializeCompanies()
 	public_companies = list(
-		new /datum/stonk_company("Georges Pets", "Dogs", 10, ) = 0,
-		new /datum/stonk_company("Fixers Ramen", "Ramen", 10, ) = 0,
-		new /datum/stonk_company("WeRCheese", "Cheese Dolls", 10, ) = 0,
+		new /datum/stonk_company("Georges Pets", "Dogs") = 0,
+		new /datum/stonk_company("Fixers Ramen", "Ramen",company_desc = "\
+			\"Trained under the famous rank 4 chef, <br>\
+			come for the best ramen in the district!\"<br> \
+			A fixer themed ramen shop.") = 0,
+		new /datum/stonk_company("WeRCheese", "Cheese Dolls",company_desc = "\
+			\"We are the only source of true cheese.\"<br>\
+			A cafe that sells figurines made of cheese.") = 0,
 		)
 
 	/*---------------\
@@ -78,9 +83,10 @@ a.updated {
 
 	. = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body><br>\
 		<tt>----------</tt><br>\
-		BUDGET:[budget]"
+		BUDGET:[budget]|"
+	//General Button already has a . += in its define so it must be written like this.
 	GENERAL_BUTTON(REF(requester),"reclaimAhn",REF(src),"WITHDRAWL AHN")
-	. += "<br>"
+	. += "|STONKTIME:[TimeUntilUpdate(0.01)]/3 MINUTES<br>"
 
 	for(var/mode_option = STONKUI_MAIN to STONKUI_FOCUS)
 		if(mode_option == STONKUI_FOCUS & !focused_company)
@@ -125,7 +131,7 @@ a.updated {
 		. += "<td>[S.name]</td>"
 		//Value
 		if(!S.bankrupt)
-			. += "<td>[S.value]</td>"
+			. += "<td>[S.current_value]</td>"
 		else
 			. += "<td>0</td>"
 		//Owned Shares
@@ -159,20 +165,58 @@ a.updated {
 	|Numerical Variable Edits|
 	\-----------------------*/
 
-/datum/stonk_investor/proc/AdjustStonk(amt, datum/stonk_company/stonk)
-	var/actual_value = amt
-	var/logging_text = ""
-	if(amt > 0)
-		actual_value = clamp(amt, 0, budget)
-		logging_text = "$[actual_value]$ worth of [stonk.name] shares invested."
-	if(amt < 0)
-		actual_value = clamp(amt, 0, -1 * stonk.value)
-		logging_text = "$[actual_value]$ worth of [stonk.name] shares sold."
-	if(!actual_value)
+		/*-------------------\
+		|Stolen TG Stock Code|
+		\-------------------*/
+
+/datum/stonk_investor/proc/BuyStonk(datum/stonk_company/S, mob/living/user)
+	if (!S || !user)
 		return
-	budget -= actual_value
-	public_companies[stonk] += actual_value
-	stonk_history += "[logging_text]<br>"
+	var/b = budget
+	var/avail = S.available_shares
+	var/price = S.current_value
+	var/canbuy = round(b / price)
+	var/amt = round(input(user, "How many shares? \n(Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0) as num|null)
+	if (!user)
+		return
+	b = budget
+
+	amt = min(amt, S.available_shares, round(b / S.current_value))
+	if (!amt)
+		return
+	if (!S.buyShares(src, amt))
+		to_chat(user, span_danger("Could not complete transaction."))
+		return
+
+	var/total = amt * S.current_value
+	var/feedback = span_notice("Bought [amt] shares of [S.name] at [S.current_value] a share for [total] ahn.")
+	to_chat(user, feedback)
+	stonk_history += "[feedback]<br>"
+
+/datum/stonk_investor/proc/SellStonk(datum/stonk_company/S, mob/living/user)
+	if (!S || !user)
+		return
+	var/avail = S.shareholders[src]
+	if (!avail)
+		to_chat(user, span_danger("This account does not own any shares of [S.name]!"))
+		return
+	var/price = S.current_value
+	var/amt = round(input(user, "How many shares? \n(Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
+	amt = min(amt, S.shareholders[src])
+
+	if (!user)
+		return
+	if (!amt)
+		return
+
+	var/total = amt * S.current_value
+	if (!S.sellShares(src, amt))
+		to_chat(user, span_danger("Could not complete transaction."))
+		return
+
+	var/feedback = span_notice("Sold [amt] shares of [S.name] at [S.current_value] a share for [total] ahn.")
+	to_chat(user, feedback)
+	stonk_history += "[feedback]<br>"
 
 	/*---------\
 	|Misc Procs|
@@ -187,10 +231,28 @@ a.updated {
 		if(STONKUI_FOCUS)
 			return "SELECTED COMPANY"
 
-/datum/stonk_investor/proc/ReturnStonkValue(company)
-	return public_companies[company]
+/datum/stonk_investor/proc/ReturnStonkValue(datum/stonk_company/company)
+	if(company.shareholders[src])
+		return company.shareholders[src]
+	return 0
 
 /datum/stonk_investor/proc/CatchUp()
-	if(last_login)
+	if(!last_check)
+		last_check = world.time
 		return
-	last_login = world.time
+	//Stock Market updates every 4 minutes.
+	var/inbetween_time = TimeUntilUpdate() / 3
+	if(inbetween_time < 1)
+		return
+	if(inbetween_time > 8)
+		inbetween_time = 8
+	for(var/cycles = 1 to inbetween_time)
+		for(var/datum/stonk_company/SC in public_companies)
+			if(!SC)
+				continue
+			SC.CalculateFourMinutes()
+	last_check = world.time
+	return inbetween_time
+
+/datum/stonk_investor/proc/TimeUntilUpdate(round_amount = 1)
+	return round(((world.time - last_check) / (1 MINUTES)))

@@ -120,20 +120,16 @@
 	if (href_list["buyshares"])
 		var/datum/stonk_company/S = locate(href_list["buyshares"]) in trader_program.public_companies
 		if(S)
-			var/credits = input(usr, "INVEST", "BUY SHARES") as null|num
-			if(credits)
-				trader_program.AdjustStonk(S, credits)
-				updateUsrDialog()
-				return TRUE
+			trader_program.BuyStonk(S, usr)
+			updateUsrDialog()
+			return TRUE
 
 	if (href_list["sellshares"])
 		var/datum/stonk_company/S = locate(href_list["sellshares"]) in trader_program.public_companies
 		if(S)
-			var/credits = input(usr, "DIVEST", "SELL SHARES") as null|num
-			if(credits)
-				trader_program.AdjustStonk(S, credits)
-				updateUsrDialog()
-				return TRUE
+			trader_program.SellStonk(S, usr)
+			updateUsrDialog()
+			return TRUE
 
 /obj/machinery/stonkmarket/proc/ProfileMenu(href, href_list)
 	. = "<tt>\
