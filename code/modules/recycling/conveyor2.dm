@@ -237,6 +237,18 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	update()
 
+//CLOGGING CODE
+/obj/machinery/conveyor/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	//List of things that trample vines.
+	if(isitem(mover))
+		if(!mover.throwing)
+			var/turf/locturf = get_turf(src)
+			var/list/items = locturf.contents - src - locturf.lighting_object
+			if(length(items) > MAX_CONVEYOR_ITEMS_MOVE)
+				return FALSE
+	return TRUE
+
 // the conveyor control switch
 //
 //
