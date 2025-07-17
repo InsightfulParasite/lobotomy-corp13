@@ -62,6 +62,12 @@
 	animate(src, alpha = 100, time = 30)
 	addtimer(CALLBACK(src, PROC_REF(StartAnimation)),30)
 
+//Landmarks
+/obj/effect/landmark/mob_traffic
+	name = "mob_traffic"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "portal_exit"
+
 //Kikimora Graffiti
 /obj/effect/decal/cleanable/crayon/cognito
 	name = "graffiti"
