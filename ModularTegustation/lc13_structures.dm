@@ -111,6 +111,26 @@
 	pixel_x = -16
 	base_pixel_x = -16
 
+/obj/structure/fluff/torii
+	name = "torii gate"
+	desc = "A structure signifying the entry into sacred land."
+	icon = 'ModularTegustation/Teguicons/torii_gate.dmi'
+	icon_state = "torii_off"
+	anchored = TRUE
+	deconstructible = FALSE
+	pixel_x = -16
+	base_pixel_x = -16
+
+/obj/structure/fluff/torii/lit
+	icon_state = "torii"
+
+/obj/structure/fluff/torii/top
+	icon_state = "toriitop_off"
+	layer = WALL_OBJ_LAYER
+
+/obj/structure/fluff/torii/top/lit
+	icon_state = "toriitop"
+
 /obj/structure/fluff/grave
 	name = "gravestone"
 	desc = "A traditional gravestone."
