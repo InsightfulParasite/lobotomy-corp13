@@ -4,13 +4,11 @@
 */
 
 #define SEND_ON_SIGNAL 1
-#define SEND_ON_WAVE 2
-#define SEND_TILL_MAX 3
+#define SEND_TILL_MAX 2
 
 /datum/component/monwave_spawner
 	var/assault_pace
 	//Cooldowns for procs.
-	var/resume_cooldown = 0
 	var/generate_wave_cooldown = 0
 	var/generate_wave_cooldown_time = 5 SECONDS
 	//Our assault target
@@ -34,7 +32,7 @@
 	var/list/assult_path = list()
 
 //Experimental So i dont have to use the procs all the time
-/datum/component/monwave_spawner/Initialize(attack_target, assault_type = SEND_ON_WAVE, max_mobs = 30, list/wave_faction = list("hostile"), list/new_wave_order)
+/datum/component/monwave_spawner/Initialize(attack_target, assault_type = SEND_TILL_MAX, max_mobs = 8, list/wave_faction = list("hostile"), list/new_wave_order)
 	if(!isstructure(parent) && !ishostile(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -54,17 +52,15 @@
 	if(!parent || !assault_target)
 		qdel(src)
 		return
-	if(length(last_wave) && world.time >= resume_cooldown)
-		CleanupAssault()
-		resume_cooldown = world.time + (1 MINUTES)
+	if(Length(existing_mobs) > max_existing_mobs)
 		return
 	if(world.time >= generate_wave_cooldown)
 		GenerateWave()
 		generate_wave_cooldown = world.time + generate_wave_cooldown_time
 		return
 
-/datum/component/monwave_spawner/proc/BeginProcessing()
-	if(assault_pace == SEND_ON_SIGNAL)
+/datum/component/monwave_spawner/proc/BeginProcessing(bypass = FALSE
+	if(assault_pace == SEND_ON_SIGNAL && !bypass)
 		return
 	START_PROCESSING(SSdcs, src)
 
@@ -90,6 +86,7 @@
 	if(!wave_leader && LeaderQualifications(spawned_mob))
 		wave_leader = spawned_mob
 	current_wave += spawned_mob
+	existing_mobs += spawned_mob
 	spawned_mob.faction = faction.Copy()
 	RegisterSignal(spawned_mob, COMSIG_LIVING_DEATH, PROC_REF(MinionSlain))
 	return spawned_mob
@@ -99,6 +96,7 @@
 
 	last_wave -= M
 	current_wave -= M
+	existing_mobs -= M
 
 //Leader Modularization if you want to make only certain mobs leaders.
 /datum/component/monwave_spawner/proc/LeaderQualifications(mob/living/simple_animal/hostile/recruit)
@@ -140,6 +138,7 @@
 	var/target_loc = assault_target
 	if(turf_to_go)
 		target_loc = get_turf(turf_to_go)
+		assault_target = target_loc
 	assult_path = get_path_to(parent, target_loc, /turf/proc/Distance_cardinal, 0, 200)
 
 //Invisible Effect only visible to ghosts. Uses a altered form of Hostile Patrol Code -IP
