@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(marked_players)
 				if (!(P.firer in glob_faction))
 					glob_faction += P.firer
 					say(attacked_line)
-	
+
 	// Track damage for nuke rats achievement
 	if(glob_faction == GLOB.nuke_rats_players && P.firer && isliving(P.firer))
 		var/mob/living/L = P.firer
@@ -175,7 +175,7 @@ GLOBAL_LIST_EMPTY(marked_players)
 			if (!(user in glob_faction ))
 				glob_faction += user
 				say(attacked_line)
-	
+
 	// Track damage for nuke rats achievement
 	if(glob_faction == GLOB.nuke_rats_players && user && user.client && !(user in GLOB.nuke_rats_killers))
 		GLOB.nuke_rats_killers += user
@@ -196,7 +196,7 @@ GLOBAL_LIST_EMPTY(marked_players)
 			if(H != src && H.stat != DEAD && H.glob_faction == GLOB.nuke_rats_players)
 				all_dead = FALSE
 				break
-		
+
 		if(all_dead && GLOB.nuke_rats_killers.len)
 			// Award achievement to all players who participated in killing nuke rats
 			for(var/mob/living/L in GLOB.nuke_rats_killers)
@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(marked_players)
 					L.client.give_award(/datum/award/achievement/lc13/city/nuke_rats_genocide, L)
 			// Clear the killers list after awarding
 			GLOB.nuke_rats_killers.Cut()
-	
+
 	return ..()
 
 /mob/living/simple_animal/hostile/Life()
@@ -956,6 +956,12 @@ GLOBAL_LIST_EMPTY(marked_players)
 	if(ismob(attacked_target) || isobj(attacked_target))
 		changeNext_move(attack_cooldown)
 	return attacked_target.attack_animal(src)
+
+//IF I BUMP INTO ONE MORE BARRICADE IM GOING TO FRICKIN DESTROY IT
+/mob/living/simple_animal/hostile/Bump(atom/A)
+	if(isobj(A) && A.density && LAZYLEN(patrol_path))
+		DestroyObjectsInDirection(dir)
+	return ..()
 
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
