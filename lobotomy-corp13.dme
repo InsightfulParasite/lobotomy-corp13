@@ -157,6 +157,7 @@
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
 #include "code\__DEFINES\dcs\signals_fish.dm"
+#include "code\__DEFINES\dcs\signals_object.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\~lobotomy_defines\_patreon.dm"
 #include "code\__DEFINES\~lobotomy_defines\adventure.dm"
