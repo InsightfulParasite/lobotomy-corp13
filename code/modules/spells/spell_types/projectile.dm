@@ -106,7 +106,7 @@
 		projectile.trail_icon = proj_trail_icon
 		projectile.trail_icon_state = proj_trail_icon_state
 
-	projectile.preparePixelProjectile(target,user)
+	projectile.aim_projectile(target,user)
 	if(projectile.homing)
 		projectile.set_homing_target(target)
 	projectile.fire()

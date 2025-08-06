@@ -322,7 +322,7 @@ It has now been over four months. Now we get her for real. -Coxswain
 	P.fired_from = src
 	P.Angle = angle_to_target
 	P.original = target
-	P.preparePixelProjectile(target, src)
+	P.aim_projectile(target, src)
 	P.damage = bullet_damage
 	P.fire()
 	playsound(src, 'sound/abnormalities/redhood/fire.ogg', 50, FALSE, 4)
@@ -361,7 +361,7 @@ It has now been over four months. Now we get her for real. -Coxswain
 		P.firer = src
 		P.fired_from = src
 		P.original = target
-		P.preparePixelProjectile(target, src)
+		P.aim_projectile(target, src)
 		P.damage = throw_damage
 		P.fire(angle_to_target - (throw_cone / 2) + projectile_angle_difference * i)
 

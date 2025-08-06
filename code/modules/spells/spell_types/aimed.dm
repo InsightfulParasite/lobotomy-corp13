@@ -78,7 +78,7 @@
 	for(var/i in 1 to projectiles_per_fire)
 		var/obj/projectile/P = new projectile_type(user.loc)
 		P.firer = user
-		P.preparePixelProjectile(target, user)
+		P.aim_projectile(target, user)
 		for(var/V in projectile_var_overrides)
 			if(P.vars[V])
 				P.vv_edit_var(V, projectile_var_overrides[V])
@@ -186,7 +186,7 @@
 	var/current_angle = iteration * one_fire_angle * rand_spr - (projectile_initial_spread_amount / 2)
 	P.pixel_x = rand(-projectile_location_spread_amount, projectile_location_spread_amount)
 	P.pixel_y = rand(-projectile_location_spread_amount, projectile_location_spread_amount)
-	P.preparePixelProjectile(target, user, null, current_angle)
+	P.aim_projectile(target, user, null, current_angle)
 
 /obj/effect/proc_holder/spell/aimed/fairy
 	name = "Fairy"
@@ -213,7 +213,7 @@
 		if(damage_type == PALE_DAMAGE)
 			P.damage = 30
 		P.firer = user
-		P.preparePixelProjectile(target, user)
+		P.aim_projectile(target, user)
 		for(var/V in projectile_var_overrides)
 			if(P.vars[V])
 				P.vv_edit_var(V, projectile_var_overrides[V])
@@ -253,7 +253,7 @@
 	for(var/i in 1 to projectiles_per_fire)
 		var/obj/projectile/P = new projectile_type(get_turf(user))
 		P.firer = user
-		P.preparePixelProjectile(target, user)
+		P.aim_projectile(target, user)
 		for(var/V in projectile_var_overrides)
 			if(P.vars[V])
 				P.vv_edit_var(V, projectile_var_overrides[V])

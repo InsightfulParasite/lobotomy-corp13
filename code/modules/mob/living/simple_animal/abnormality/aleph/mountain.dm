@@ -308,7 +308,7 @@
 			P.yo = target.y - startloc.y
 			P.xo = target.x - startloc.x
 			P.original = target
-			P.preparePixelProjectile(target, src)
+			P.aim_projectile(target, src)
 			P.fire()
 		SLEEP_CHECK_DEATH(2)
 	finishing = FALSE

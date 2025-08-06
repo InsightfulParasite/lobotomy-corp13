@@ -235,7 +235,7 @@
 		P.yo = target_loc.y - start_loc.y
 		P.xo = target_loc.x - start_loc.x
 		P.original = target
-		P.preparePixelProjectile(target_loc, src, spread = rand(0, 7))
+		P.aim_projectile(target_loc, src, spread = rand(0, 7))
 		P.fire()
 
 	SLEEP_CHECK_DEATH(1 SECONDS)
@@ -272,7 +272,7 @@
 	P.yo = target_loc.y - start_loc.y
 	P.xo = target_loc.x - start_loc.x
 	P.original = target
-	P.preparePixelProjectile(target_loc, src)
+	P.aim_projectile(target_loc, src)
 	addtimer(CALLBACK (P, TYPE_PROC_REF(/obj/projectile, fire)), 0.8 SECONDS)
 
 	SLEEP_CHECK_DEATH(0.8 SECONDS)
@@ -424,7 +424,7 @@
 		P.yo = TT.y - T.y
 		P.xo = TT.x - T.x
 		P.original = TT
-		P.preparePixelProjectile(TT, T)
+		P.aim_projectile(TT, T)
 		storm_pillars += P
 
 	SLEEP_CHECK_DEATH(2 SECONDS)

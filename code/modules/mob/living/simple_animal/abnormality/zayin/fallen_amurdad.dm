@@ -390,7 +390,7 @@
 	P.firer = src
 	P.impacted = list(src = TRUE)
 	P.suppressed = SUPPRESSED_QUIET
-	P.preparePixelProjectile(target, src)
+	P.aim_projectile(target, src)
 	P.fire()
 
 /obj/projectile/needle
