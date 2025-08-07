@@ -470,7 +470,7 @@
 		if(L.anti_magic_check())
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-		var/atom/throw_target = get_edge_target_turf(L, angle2dir(Angle))
+		var/atom/throw_target = get_edge_target_turf(L, angle2dir(angle))
 		L.throw_at(throw_target, 200, 4)
 
 /obj/projectile/magic/bounty
@@ -600,7 +600,7 @@
 	damage = 0
 	var/proxdet = TRUE
 
-/obj/projectile/magic/aoe/Range()
+/obj/projectile/magic/aoe/reduce_range()
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
 			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
@@ -699,7 +699,7 @@
 	for(var/turf/T in range(1, get_turf(src)))
 		new trail_type(T)
 
-/obj/projectile/magic/aoe/pillar/Range()
+/obj/projectile/magic/aoe/pillar/reduce_range()
 	if(proxdet)
 		for(var/obj/machinery/computer/abnormality/CA in range(1, get_turf(src)))
 			if(CA.meltdown || !CA.datum_reference || !CA.datum_reference.current || !CA.datum_reference.qliphoth_meter || CA.datum_reference.working)

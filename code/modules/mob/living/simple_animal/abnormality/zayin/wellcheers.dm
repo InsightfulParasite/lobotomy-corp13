@@ -185,7 +185,7 @@
 	desc = "A shaken can of cherry-flavored soda."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "wellcheers_red"
-	nodamage = TRUE
+
 	var/datum/status_effect/effect_type = /datum/status_effect/wellcheers_bad/red
 
 /obj/projectile/wellcheers/on_hit(atom/target, blocked, pierce_hit)

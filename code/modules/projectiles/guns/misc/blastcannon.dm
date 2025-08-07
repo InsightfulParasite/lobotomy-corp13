@@ -124,7 +124,7 @@
 	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(starting)] at [ADMIN_VERBOSEJMP(targturf)] ([target.name]) by [ADMIN_LOOKUPFLW(user)] with power [heavy]/[medium]/[light].")
 	log_game("Blast wave fired from [AREACOORD(starting)] at [AREACOORD(targturf)] ([target.name]) by [key_name(user)] with power [heavy]/[medium]/[light].")
 	var/obj/projectile/blastwave/BW = new(loc, heavy, medium, light)
-	BW.preparePixelProjectile(target, get_turf(src), params, 0)
+	BW.aim_projectile(target, get_turf(src), params, 0)
 	BW.fire()
 	name = initial(name)
 	desc = initial(desc)
@@ -134,7 +134,6 @@
 	name = "blast wave"
 	icon_state = "blastwave"
 	damage = 0
-	nodamage = FALSE
 	movement_type = FLYING
 	projectile_phasing = ALL		// just blows up the turfs lmao
 	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
@@ -151,7 +150,7 @@
 	lightr = _light
 	return ..()
 
-/obj/projectile/blastwave/Range()
+/obj/projectile/blastwave/reduce_range()
 	. = ..()
 	if(QDELETED(src))
 		return

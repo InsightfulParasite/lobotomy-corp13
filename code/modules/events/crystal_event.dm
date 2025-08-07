@@ -791,7 +791,7 @@ This section is for the crystal monsters variations
 	color = COLOR_YELLOW
 	damage = 0
 	damage_type = FIRE
-	nodamage = TRUE
+
 	temperature = -75
 
 /mob/living/simple_animal/hostile/crystal_monster/killer/Bump(atom/clong)

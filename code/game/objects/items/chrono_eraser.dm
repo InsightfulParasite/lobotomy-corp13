@@ -125,7 +125,7 @@
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
-	nodamage = TRUE
+
 	var/obj/item/gun/energy/chrono_gun/gun = null
 
 /obj/projectile/energy/chrono_beam/Initialize()

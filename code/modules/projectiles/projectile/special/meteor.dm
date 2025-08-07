@@ -4,7 +4,7 @@
 	icon_state = "small1"
 	damage = 0
 	damage_type = BULLET
-	nodamage = TRUE
+
 
 /obj/projectile/meteor/Bump(atom/A)
 	if(A == firer)

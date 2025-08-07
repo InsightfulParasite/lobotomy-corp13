@@ -143,19 +143,10 @@
 	if(!istype(P, /obj/projectile/magic/aoe/fireball))
 		return
 	var/obj/projectile/magic/aoe/fireball/F = P
-	switch(strength)
-		if(1 to 3)
-			F.exp_light = strength-1
-		if(4 to INFINITY)
-			F.exp_heavy = strength-3
 	F.exp_fire += strength
 
 /obj/projectile/magic/aoe/fireball/firebreath
 	name = "fire breath"
-	exp_heavy = 0
-	exp_light = 0
-	exp_flash = 0
-	exp_fire= 4
 
 /datum/mutation/human/void
 	name = "Void Magnet"

@@ -39,7 +39,6 @@
 					return
 				FD.pen = A
 				FD.damage = 5
-				FD.nodamage = FALSE
 				to_chat(user, "<span class='notice'>You insert [A] into [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>There's already something in [src].</span>")
@@ -52,7 +51,6 @@
 	var/obj/projectile/bullet/reusable/foam_dart/FD = BB
 	if(FD.pen)
 		FD.damage = initial(FD.damage)
-		FD.nodamage = initial(FD.nodamage)
 		user.put_in_hands(FD.pen)
 		to_chat(user, "<span class='notice'>You remove [FD.pen] from [src].</span>")
 		FD.pen = null

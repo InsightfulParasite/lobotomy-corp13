@@ -177,7 +177,7 @@ have ways of interacting with a specific mob and control it.
 	var/mob/living/living_pawn = pawn
 	if(istype(Proj , /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
 		if((Proj.damage_type == FIRE) || (Proj.damage_type == BRUTE))
-			if(!Proj.nodamage && Proj.damage < living_pawn.health && isliving(Proj.firer))
+			if(Proj.damage && Proj.damage < living_pawn.health && isliving(Proj.firer))
 				retaliate(Proj.firer)
 
 /datum/ai_controller/monkey/proc/on_hitby(datum/source, atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)

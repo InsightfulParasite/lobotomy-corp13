@@ -148,7 +148,7 @@
 		return
 	if((proj.damage_type == STAMINA))
 		return
-	if(!proj.nodamage && proj.damage < shot_honorbound.health && isliving(proj.firer))
+	if(proj.damage && proj.damage < shot_honorbound.health && isliving(proj.firer))
 		guilty(proj.firer)
 
 /datum/mutation/human/honorbound/proc/thrown_guilt(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)

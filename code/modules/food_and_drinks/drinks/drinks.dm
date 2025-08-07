@@ -147,7 +147,7 @@
 
 /obj/item/reagent_containers/food/drinks/bullet_act(obj/projectile/P)
 	. = ..()
-	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
+	if((P.damage) && P.damage_type == BRUTE && !QDELETED(src))
 		var/atom/T = get_turf(src)
 		smash(T)
 		return
@@ -658,7 +658,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/projectile/P)
 	. = ..()
-	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
+	if(!(P.damage) && P.damage_type == BRUTE && !QDELETED(src))
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
 		crushed_can.icon_state = icon_state
 		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))

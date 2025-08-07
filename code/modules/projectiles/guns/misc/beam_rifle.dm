@@ -201,7 +201,7 @@
 		if(!istype(curloc))
 			return
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
-	P.preparePixelProjectile(targloc, current_user, current_user.client.mouseParams, 0)
+	P.aim_projectile(targloc, current_user, current_user.client.mouseParams, 0)
 	P.fire(lastangle)
 
 /obj/item/gun/energy/beam_rifle/process()
@@ -394,7 +394,7 @@
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
 		new firing_effect_type(get_turf(src), firing_dir)
-	BB.preparePixelProjectile(target, user, params, spread)
+	BB.aim_projectile(target, user, params, spread)
 	BB.fire(gun? gun.lastangle : null, null)
 	BB = null
 	return TRUE
@@ -480,7 +480,7 @@
 
 /obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target, piercing_hit = FALSE)
 	set waitfor = FALSE
-	if(nodamage)
+	if(!damage)
 		return FALSE
 	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
 	if(!piercing_hit)
@@ -499,27 +499,14 @@
 	var/constant_tracer = FALSE
 
 /obj/projectile/beam/beam_rifle/hitscan/generate_hitscan_tracers(cleanup = TRUE, duration = 5, impacting = TRUE, highlander)
-	set waitfor = FALSE
-	if(isnull(highlander))
-		highlander = constant_tracer
-	if(highlander && istype(gun))
-		QDEL_LIST(gun.current_tracers)
-		for(var/datum/point/p in beam_segments)
-			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
-	else
-		for(var/datum/point/p in beam_segments)
-			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
-	if(cleanup)
-		QDEL_LIST(beam_segments)
-		beam_segments = null
-		QDEL_NULL(beam_index)
+	return
 
 /obj/projectile/beam/beam_rifle/hitscan/aiming_beam
 	tracer_type = /obj/effect/projectile/tracer/tracer/aiming
 	name = "aiming beam"
 	hitsound = null
 	hitsound_wall = null
-	nodamage = TRUE
+
 	damage = 0
 	constant_tracer = TRUE
 	hitscan_light_range = 0

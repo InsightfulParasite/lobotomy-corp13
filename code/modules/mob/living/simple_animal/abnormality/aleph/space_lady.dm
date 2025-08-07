@@ -177,7 +177,7 @@
 		P.yo = target.y - startloc.y
 		P.xo = target.x - startloc.x
 		P.original = target
-		P.preparePixelProjectile(target, src)
+		P.aim_projectile(target, src)
 		P.fire()
 
 	SLEEP_CHECK_DEATH(10)
@@ -207,7 +207,7 @@
 		P.yo = target.y - startloc.y
 		P.xo = target.x - startloc.x
 		P.original = target
-		P.preparePixelProjectile(target, src)
+		P.aim_projectile(target, src)
 		P.fire()
 
 	SLEEP_CHECK_DEATH(10)
@@ -262,7 +262,7 @@
 	name = "miniature white hole"
 	icon_state = "antimagic"
 	desc = "A mini white hole."
-	nodamage = TRUE
+
 	hitsound = "sound/effects/footstep/slime1.ogg"
 	speed = 3
 
@@ -280,7 +280,7 @@
 	name = "miniature black hole"
 	icon_state = "antimagic"
 	desc = "A mini black hole."
-	nodamage = TRUE
+
 	hitsound = "sound/effects/footstep/slime1.ogg"
 	color = COLOR_PURPLE
 	speed = 3

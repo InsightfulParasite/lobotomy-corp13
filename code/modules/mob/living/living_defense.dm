@@ -51,9 +51,9 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_BULLET_ACT, P, def_zone, piercing_hit)
 	var/armor = run_armor_check(def_zone, P.damage_type, "","",P.armour_penetration)
 	var/on_hit_state = P.on_hit(src, armor, piercing_hit)
-	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
+	if(P.damage && on_hit_state != BULLET_ACT_BLOCK)
 		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, white_healable = P.white_healing)
-		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
+		apply_effects(P.stun, P.knockdown, P.unconscious, null, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
 	return on_hit_state ? BULLET_ACT_HIT : BULLET_ACT_BLOCK

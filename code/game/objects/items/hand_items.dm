@@ -456,7 +456,7 @@
 	blown_kiss.fired_from = user
 	blown_kiss.firer = user // don't hit ourself that would be really annoying
 	blown_kiss.impacted = list(user = TRUE) // just to make sure we don't hit the wearer
-	blown_kiss.preparePixelProjectile(target, user)
+	blown_kiss.aim_projectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
 
@@ -482,7 +482,7 @@
 	blown_kiss.fired_from = offerer
 	blown_kiss.firer = offerer // don't hit ourself that would be really annoying
 	blown_kiss.impacted = list(offerer = TRUE) // just to make sure we don't hit the wearer
-	blown_kiss.preparePixelProjectile(taker, offerer)
+	blown_kiss.aim_projectile(taker, offerer)
 	blown_kiss.suppressed = SUPPRESSED_VERY // this also means it's a direct offer
 	blown_kiss.fire()
 	qdel(src)
@@ -504,7 +504,7 @@
 	speed = 1.6
 	damage_type = BRUTE
 	damage = 0
-	nodamage = TRUE // love can't actually hurt you
+ // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
@@ -577,7 +577,7 @@
 
 /obj/projectile/kiss/death
 	name = "kiss of death"
-	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
+ // okay i kinda lied about love not being able to hurt you
 	damage = 35
 	wound_bonus = 0
 	sharpness = SHARP_POINTY

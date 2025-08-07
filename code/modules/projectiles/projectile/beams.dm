@@ -107,7 +107,7 @@
 /obj/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
-	nodamage = TRUE
+
 
 /obj/projectile/beam/scatter
 	name = "laser pellet"
@@ -118,7 +118,6 @@
 	name = "\improper X-ray beam"
 	icon_state = "xray"
 	damage = 15
-	irradiate = 300
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE
 
@@ -314,7 +313,8 @@
 	hitsound = 'sound/weapons/slash.ogg'
 	hitsound_wall = 'sound/weapons/slash.ogg'
 	damage_type = BLACK_DAMAGE
-	hit_stunned_targets = TRUE
+	hit_prone_targets = TRUE // ducking will save you from the first wave, but not the rebounds
+	ignore_range_hit_prone_targets = TRUE
 	white_healing = FALSE
 	projectile_piercing = PASSMOB
 	projectile_phasing = (ALL & (~PASSMOB) & (~PASSCLOSEDTURF))
@@ -371,7 +371,7 @@
 /obj/projectile/beam/laser/iff
 	damage_type = RED_DAMAGE
 	light_color = COLOR_RED
-	nodamage = TRUE	//Damage is calculated later
+	//Damage is calculated later
 	projectile_piercing = PASSMOB
 
 /obj/projectile/beam/laser/iff/on_hit(atom/target, blocked = FALSE)
@@ -379,7 +379,6 @@
 		var/mob/living/L = target
 		if("neutral" in L.faction)
 			return
-	nodamage = FALSE
 	. = ..()
 	qdel(src)
 

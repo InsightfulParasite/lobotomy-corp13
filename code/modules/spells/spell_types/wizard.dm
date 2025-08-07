@@ -21,7 +21,6 @@
 	speed = 5
 	trigger_range = 0
 	linger = TRUE
-	nodamage = FALSE
 	paralyze = 60
 	hitsound = 'sound/magic/mm_hit.ogg'
 	damage = 5

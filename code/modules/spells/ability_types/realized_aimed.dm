@@ -125,7 +125,7 @@
 		RP.yo = target_turf.y - T.y
 		RP.xo = target_turf.x - T.x
 		RP.original = target_turf
-		RP.preparePixelProjectile(target_turf, T)
+		RP.aim_projectile(target_turf, T)
 		addtimer(CALLBACK (RP, TYPE_PROC_REF(/obj/projectile, fire)), 3)
 	sleep(3)
 	playsound(target_turf, 'sound/abnormalities/despairknight/attack.ogg', 50, 0, 4)
@@ -134,14 +134,13 @@
 /obj/projectile/despair_rapier/ego
 	name = "Sword that Pierces Despair"
 	desc = "A magic rapier, enchanted by a knight protecting the weak."
-	nodamage = TRUE
+
 	damage = 0
 	projectile_piercing = PASSMOB
 
 /obj/projectile/despair_rapier/ego/on_hit(atom/target, blocked = FALSE)
 	if(ishuman(target))
 		return
-	nodamage = FALSE
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/H = target
 		H.TemporarySpeedChange(1, 10 SECONDS)
@@ -438,7 +437,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blackhole"
 	desc = "A mini black hole."
-	nodamage = TRUE
+
 	hitsound = "sound/effects/footstep/slime1.ogg"
 	speed = 0
 	damage = 30

@@ -93,12 +93,12 @@
 /obj/projectile/ego_bullet/ego_loyalty/iff
 	name = "loyalty IFF"
 	damage = 3
-	nodamage = TRUE	//Damage is calculated later
+	//Damage is calculated later
 	projectile_piercing = PASSMOB
 
 /obj/projectile/ego_bullet/ego_loyalty/iff/on_hit(atom/target, blocked = FALSE)
 	if(!ishuman(target))
-		nodamage = FALSE
+
 	else
 		return
 	..()
@@ -133,7 +133,7 @@
 	name = "praetorian"
 	icon_state = "loyalty"
 	damage = 3
-	nodamage = TRUE	//Damage is calculated later
+	//Damage is calculated later
 	damage_type = RED_DAMAGE
 	projectile_piercing = PASSMOB
 	homing = TRUE
@@ -141,10 +141,8 @@
 	var/homing_range = 9
 
 /obj/projectile/ego_bullet/ego_praetorian/on_hit(atom/target, blocked = FALSE)
-	if(!ishuman(target))
-		nodamage = FALSE
-	else
-		return
+	if(ishuman(target))
+		damage = 0
 	..()
 	if(!ishuman(target))
 		qdel(src)
@@ -402,7 +400,7 @@
 
 /obj/projectile/ego_bullet/special_fellbullet/proc/MagicBulletEffect(angle, atom/direct_target)
 	var/obj/effect/fellcircle/circle = new(get_turf(src))
-	circle.FireBullets(Angle, damage)
+	circle.FireBullets(angle, damage)
 
 /obj/effect/fellcircle//thing that shoots
 	name = "magic circle"

@@ -149,7 +149,7 @@
 	P.yo = the_target.y - proj_turf.y
 	P.xo = the_target.x - proj_turf.x
 	P.original = the_target
-	P.preparePixelProjectile(the_target, src)
+	P.aim_projectile(the_target, src)
 	P.fire()
 	visible_message(span_notice("[src] fires a can of soda!"))
 	count -= 1
@@ -190,7 +190,7 @@
 	new item_type(T)
 
 /obj/projectile/oceanic/special
-	nodamage = TRUE
+
 	var/list/CIA_EASY = list(
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/drug/nicotine,

@@ -2,7 +2,6 @@
 
 /obj/projectile/magic/spell
 	name = "custom spell projectile"
-	var/list/ignored_factions //Do not hit these
 	var/check_holy = FALSE
 	var/check_antimagic = FALSE
 	var/trigger_range = 0 //How far we do we need to be to hit
@@ -14,7 +13,7 @@
 	var/trail_icon_state = "trail"
 
 //todo unify this and magic/aoe under common path
-/obj/projectile/magic/spell/Range()
+/obj/projectile/magic/spell/reduce_range()
 	if(trigger_range > 1)
 		for(var/mob/living/L in range(trigger_range, get_turf(src)))
 			if(can_hit_target(L, ignore_loc = TRUE))
@@ -82,7 +81,7 @@
 	var/check_antimagic = TRUE
 	var/check_holy = FALSE
 
-/obj/effect/proc_holder/spell/targeted/projectile/proc/fire_projectile(atom/target, mob/user)
+/obj/effect/proc_holder/spell/targeted/projectile/fire_projectile(atom/target, mob/user)
 	var/obj/projectile/magic/spell/projectile = new proj_type()
 
 	if(update_projectile)
@@ -106,7 +105,7 @@
 		projectile.trail_icon = proj_trail_icon
 		projectile.trail_icon_state = proj_trail_icon_state
 
-	projectile.preparePixelProjectile(target,user)
+	projectile.aim_projectile(target,user)
 	if(projectile.homing)
 		projectile.set_homing_target(target)
 	projectile.fire()

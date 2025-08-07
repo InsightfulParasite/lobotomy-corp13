@@ -365,7 +365,7 @@
 
 	ooze.visible_message("<span class='nicegreen>[ooze] launches a mending globule!</span>", "<span class='notice'>You launch a mending globule.</span>")
 	var/obj/projectile/globule/globule = new (ooze.loc)
-	globule.preparePixelProjectile(target, ooze, params)
+	globule.aim_projectile(target, ooze, params)
 	globule.def_zone = ooze.zone_selected
 	globule.fire()
 	ooze.adjust_ooze_nutrition(-5)
@@ -382,8 +382,7 @@
 	name = "mending globule"
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
-	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall chance" = 0.5)
-	nodamage = TRUE
+
 	damage = 0
 
 ///This item is what is embedded into the mob, and actually handles healing of mending globules

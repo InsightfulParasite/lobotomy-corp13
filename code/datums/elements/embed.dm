@@ -146,7 +146,6 @@
 	var/obj/item/payload = new payload_type(get_turf(hit))
 	if(istype(payload, /obj/item/shrapnel/bullet))
 		payload.name = P.name
-	payload.embedding = P.embedding
 	payload.updateEmbedding()
 	var/mob/living/carbon/C = hit
 	var/obj/item/bodypart/limb = C.get_bodypart(hit_zone)

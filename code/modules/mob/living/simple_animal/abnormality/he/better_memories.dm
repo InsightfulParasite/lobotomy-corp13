@@ -278,9 +278,9 @@
 	if(patrol_path.len && stat == CONSCIOUS && AIStatus != AI_OFF && !client)
 		var/secondarmor = run_armor_check(null, P.damage_type, "","",P.armour_penetration)
 		var/second_on_hit_state = P.on_hit(src, secondarmor)
-		if(!P.nodamage && second_on_hit_state != BULLET_ACT_BLOCK)
+		if(P.damage && second_on_hit_state != BULLET_ACT_BLOCK)
 			apply_damage(P.damage, P.damage_type, null, secondarmor)
-			apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, secondarmor, P.stamina, P.jitter, P.paralyze, P.immobilize)
+			apply_effects(P.stun, P.knockdown, P.unconscious, null, P.slur, P.stutter, P.eyeblur, P.drowsy, secondarmor, P.stamina, P.jitter, P.paralyze, P.immobilize)
 			if(P.firer)
 				RegisterAggroValue(P.firer, P.damage, P.damage_type)
 			//If the projectile had no firer then just list it as nobuddy

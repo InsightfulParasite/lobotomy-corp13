@@ -612,7 +612,7 @@
 		var/obj/projectile/ego_bullet/atelier_logic/G = new bullet_type(proj_turf)
 		G.fired_from = src //for signal check
 		G.firer = user
-		G.preparePixelProjectile(target, user, clickparams)
+		G.aim_projectile(target, user, clickparams)
 		G.fire()
 		playsound(user, 'sound/weapons/black_silence/revolver.ogg', 60, 1)
 		gun_cooldown = world.time + gun_cooldown_time
@@ -646,12 +646,12 @@
 
 
 /obj/projectile/ego_bullet/atelier_logic/iff
-	nodamage = TRUE
+
 	projectile_piercing = PASSMOB
 
 /obj/projectile/ego_bullet/atelier_logic/iff/on_hit(atom/target, blocked = FALSE)
 	if(!ishuman(target))
-		nodamage = FALSE
+
 	else
 		return
 	..()

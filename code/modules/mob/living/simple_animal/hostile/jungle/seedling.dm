@@ -183,7 +183,7 @@
 			return
 		var/turf/our_turf = get_turf(src)
 		var/obj/projectile/seedling/readied_shot = new /obj/projectile/seedling(our_turf)
-		readied_shot.preparePixelProjectile(target, src, null, rand(-10, 10))
+		readied_shot.aim_projectile(target, src, null, rand(-10, 10))
 		readied_shot.fire()
 		playsound(src, projectilesound, 100, TRUE)
 

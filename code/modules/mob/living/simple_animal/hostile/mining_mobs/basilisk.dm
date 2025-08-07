@@ -42,7 +42,7 @@
 	icon_state = "ice_2"
 	damage = 0
 	damage_type = FIRE
-	nodamage = TRUE
+
 	temperature = -50 // Cools you down! per hit!
 
 /obj/projectile/temp/basilisk/heated
@@ -50,7 +50,6 @@
 	icon_state= "chronobolt"
 	damage = 40
 	damage_type = BRUTE
-	nodamage = FALSE
 	temperature = 0
 
 
@@ -189,7 +188,7 @@
 	icon_state = "lava"
 	damage = 5
 	damage_type = FIRE
-	nodamage = FALSE
+
 	temperature = 200 // Heats you up! per hit!
 
 /obj/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
@@ -203,7 +202,6 @@
 /obj/projectile/temp/basilisk/icewing
 	damage = 5
 	damage_type = FIRE
-	nodamage = FALSE
 
 /obj/projectile/temp/basilisk/icewing/on_hit(atom/target, blocked = FALSE)
 	. = ..()

@@ -390,7 +390,7 @@
 	P.firer = src
 	P.impacted = list(src = TRUE)
 	P.suppressed = SUPPRESSED_QUIET
-	P.preparePixelProjectile(target, src)
+	P.aim_projectile(target, src)
 	P.fire()
 
 /obj/projectile/needle
@@ -402,7 +402,6 @@
 	damage = 1
 	damage_type = RED_DAMAGE
 	eyeblur = 2
-	ricochet_ignore_flag = TRUE
 
 /obj/projectile/needle/can_hit_target(atom/target, direct_target, ignore_loc, cross_failed)
 	if(!fired)

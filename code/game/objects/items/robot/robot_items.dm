@@ -501,13 +501,13 @@
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
 	ammo_type = /obj/item/food/chewable/gumball/cyborg
-	nodamage = TRUE
+
 	damage = 0
 	speed = 0.5
 
 /obj/projectile/bullet/reusable/gumball/harmful
 	ammo_type = /obj/item/food/chewable/gumball/cyborg
-	nodamage = FALSE
+
 	damage = 3
 
 /obj/projectile/bullet/reusable/gumball/handle_drop()
@@ -532,15 +532,14 @@
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
 	ammo_type = /obj/item/food/chewable/lollipop/cyborg
-	nodamage = TRUE
+
 	damage = 0
 	speed = 0.5
 	var/color2 = rgb(0, 0, 0)
 
 /obj/projectile/bullet/reusable/lollipop/harmful
-	embedding = list(embed_chance=35, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
 	damage = 3
-	nodamage = FALSE
+
 	embed_falloff_tile = 0
 
 /obj/projectile/bullet/reusable/lollipop/Initialize()
@@ -692,7 +691,7 @@
 	var/usage = 0
 	for(var/I in tracked)
 		var/obj/projectile/P = I
-		if(!P.stun && P.nodamage)	//No damage
+		if(!P.stun && !P.damage)	//No damage
 			continue
 		usage += projectile_tick_speed_ecost * delta_time
 		usage += tracked[I] * projectile_damage_tick_ecost_coefficient * delta_time

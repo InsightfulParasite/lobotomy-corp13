@@ -12,7 +12,7 @@
 	hitsound = "sound/weapons/ego/rapier[pick(1,2)].ogg"
 	animate(src, alpha = 255, time = 3)
 
-/obj/projectile/despair_rapier/process_hit(turf/T, atom/target, atom/bumped, hit_something = FALSE)
+/obj/projectile/despair_rapier/Impact(atom/target)
 	if(!ishuman(target))
 		return ..()
 	var/mob/living/carbon/human/H = target
@@ -24,14 +24,12 @@
 
 /obj/projectile/despair_rapier/justice
 	desc = "A magic rapier, enchanted with the power of justice."
-	nodamage = TRUE	//Damage is calculated later
+	//Damage is calculated later
 	projectile_piercing = PASSMOB
 
 /obj/projectile/despair_rapier/justice/on_hit(atom/target, blocked = FALSE)
-	if(!ishuman(target))
-		nodamage = FALSE
-	else
-		return
+	if(ishuman(target))
+		damage = 0
 	..()
 	if(!ishuman(target))
 		qdel(src)
@@ -113,7 +111,7 @@
 	speed += pick(0, 0.1, 0.2, 0.3) // Randomized speed
 	animate(src, transform = src.transform*pick(1.8, 2.4, 2.8, 3.2), time = rand(1,4))
 
-/obj/projectile/mountain_spit/Range()
+/obj/projectile/mountain_spit/reduce_range()
 	for(var/mob/living/L in range(1, get_turf(src)))
 		if(L.stat != DEAD && L != firer && !L.faction_check_mob(firer, FALSE))
 			return Bump(L)
@@ -147,7 +145,7 @@
 	desc = "A blade thrown maliciously"
 	icon_state = "clown"
 	damage_type = RED_DAMAGE
-	nodamage = TRUE
+
 	damage = 0
 	projectile_piercing = PASSMOB
 	ricochets_max = 2
@@ -169,7 +167,7 @@
 /obj/projectile/clown_throw_rcorp/on_hit(atom/target, blocked = FALSE)
 	if(ishuman(target))
 		damage = 5
-		nodamage = FALSE
+
 		var/mob/living/carbon/human/H = target
 		H.apply_lc_bleed(6)
 		H.add_movespeed_modifier(/datum/movespeed_modifier/clowned)
@@ -384,7 +382,7 @@
 			color = "#622F22"
 			return
 
-/obj/projectile/lifestew_spit/Range()
+/obj/projectile/lifestew_spit/reduce_range()
 	for(var/mob/living/L in range(1, get_turf(src)))
 		if(L.stat != DEAD && L != firer && !L.faction_check_mob(firer, FALSE))
 			return Bump(L)
@@ -398,7 +396,7 @@
 	damage = 10 //rapid fire/shotgun fire
 	spread = 30
 	projectile_piercing = PASSMOB
-	nodamage = TRUE	//Damage is calculated later
+	//Damage is calculated later
 	var/list/safe_mobs = list(
 	/mob/living/simple_animal/hostile/abnormality/last_shot,
 	/mob/living/simple_animal/hostile/meatblob,
@@ -408,12 +406,10 @@
 	)
 
 /obj/projectile/bonebullet/on_hit(atom/target, blocked = FALSE)
-	if(!is_type_in_list(target, safe_mobs))
-		nodamage = FALSE
-	else
-		return
+	if(is_type_in_list(target, safe_mobs))
+		damage = 0
 	. = ..()
-	if(nodamage)
+	if(!damage)
 		return
 	qdel(src)
 

@@ -106,7 +106,7 @@
 		for(var/t in trophies)
 			var/obj/item/crusher_trophy/T = t
 			T.on_projectile_fire(D, user)
-		D.preparePixelProjectile(target, user, clickparams)
+		D.aim_projectile(target, user, clickparams)
 		D.firer = user
 		D.hammer_synced = src
 		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
@@ -169,7 +169,7 @@
 /obj/projectile/destabilizer
 	name = "destabilizing force"
 	icon_state = "pulse1"
-	nodamage = TRUE
+
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	range = 6
@@ -296,7 +296,6 @@
 		marker.name = "heated [marker.name]"
 		marker.icon_state = "lava"
 		marker.damage = bonus_value
-		marker.nodamage = FALSE
 		deadly_shot = FALSE
 
 //icewing watcher
@@ -413,7 +412,6 @@
 		marker.name = "deadly [marker.name]"
 		marker.icon_state = "chronobolt"
 		marker.damage = bonus_value
-		marker.nodamage = FALSE
 		marker.speed = 2
 		deadly_shot = FALSE
 

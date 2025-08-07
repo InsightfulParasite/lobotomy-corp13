@@ -136,7 +136,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		update_icon()
 
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/projectile/Proj)
-	if((istype(Proj,/obj/projectile/beam)) || (istype(Proj,/obj/projectile/bullet) && (Proj.damage_type == FIRE))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health && ishuman(Proj.firer)))
+	if((istype(Proj,/obj/projectile/beam)) || (istype(Proj,/obj/projectile/bullet) && (Proj.damage_type == FIRE))||(Proj.damage_type == BRUTE) && (Proj.damage && Proj.damage < health && ishuman(Proj.firer)))
 		retaliate(Proj.firer)
 	return ..()
 
